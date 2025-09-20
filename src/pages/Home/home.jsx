@@ -1,10 +1,14 @@
 import { Navbar } from "../../components/Navbar/navbar"
+import { Sidebar } from "../../components/Sidebar/sidebar"
 
 export const Home = () =>{
     return (
         <>
             <Navbar />
-            <h1>home page</h1>
+            <main>
+                <Sidebar />
+            </main>
+            
         </>
         
     )
