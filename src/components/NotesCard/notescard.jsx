@@ -1,11 +1,19 @@
-export const NotesCard = ({id, title, text}) =>{
+import { useNotes } from "../../context/notesContext"
+
+export const NotesCard = ({id, title, text, isPinned}) =>{
+    const { notes, notesDispatch } = useNotes();
+
+    const onPinClick = () => {
+        notesDispatch({ type: "PIN_TOGGLE", payload: { id } });
+    }
+    
     return(
-        <div key={id} className="flex flex-col gap-3 p-4 w-64 border rounded-sm">
+        <div key={id} className="flex flex-col gap-3 p-4 w-64 border rounded-md">
             <div className="flex justify-between">
                 <p>{title}</p>
-                <button>
-                    <span class="material-symbols-outlined">
-                        keep
+                <button onClick={onPinClick} className="cursor-pointer">
+                    <span className={isPinned ? "material-icons" : "material-icons-outlined"}>
+                        push_pin
                     </span>
                 </button>
             </div>
@@ -13,12 +21,12 @@ export const NotesCard = ({id, title, text}) =>{
                 <p>{text}</p>
                 <div className="flex gap-3 ml-auto">
                     <button>
-                        <span class="material-symbols-outlined">
+                        <span className="material-icons-outlined">
                             archive
                         </span>
                     </button>
                     <button>
-                        <span class="material-symbols-outlined">
+                        <span className="material-icons-outlined">
                             delete
                         </span>
                     </button>
