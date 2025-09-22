@@ -14,7 +14,7 @@ export const notesReducer = (state, {type,payload}) =>{
         case "ADD_NOTES":
             return {
                 ...state, 
-                notes: [...state.notes, {title: state.title, text: state.text, id: uuid(), isPinned:false, isArchived:false}] 
+                notes: [...state.notes, {title: state.title, text: state.text, id: uuid(), isPinned:false, isArchived:false, isDeleted:false}] 
             }
         case "RESET":
             return {
@@ -32,6 +32,19 @@ export const notesReducer = (state, {type,payload}) =>{
                 ...state,
                 notes: state.notes.map(note => note.id === payload.id ? {...note, isArchived:!note.isArchived} : note)
             }
+        case "DELETE":
+            return {
+                ...state,
+                notes: state.notes.some(note => note.id === payload.id && note.isDeleted) ? 
+                state.notes.filter(note => note.id!== payload.id) : 
+                state.notes.map(note => note.id === payload.id? {...note, isDeleted: true} : note)
+            }
+        case "RESTORE":
+            return {
+                ...state,
+                notes: state.notes.map(note => note.id === payload.id? {...note, isDeleted: false, isArchived: false} : note)
+            }
+
         default:
             return state
         
