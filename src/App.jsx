@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Home } from './pages/Home/home'
 import {Routes, Route} from 'react-router-dom'
-
+import { Archive } from './pages/Archive/archive'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -12,6 +12,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path='/archive' element={<Archive />} />
       </Routes>
     </>
   )

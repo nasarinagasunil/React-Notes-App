@@ -5,7 +5,7 @@ import { useNotes } from "../../context/notesContext"
 
 
 export const Home = () => {
-    const { title, text, notes, notesDispatch } = useNotes();
+    const { title, text, notes, archive, notesDispatch } = useNotes();
 
     const onTitleChange = (e) => {
         notesDispatch({ type: "TITLE", payload: e.target.value })
@@ -18,8 +18,13 @@ export const Home = () => {
         notesDispatch({ type: "RESET" })
     }
 
-    const pinnedNotes = notes?.length > 0 && notes.filter(({ isPinned }) => isPinned);
-    const otherNotes = notes?.length > 0 && notes.filter(({ isPinned }) => !isPinned);
+    const homeNotes = notes?.length > 0 && notes.filter(({ isArchived }) =>!isArchived);
+    const pinnedNotes = homeNotes?.length > 0 && homeNotes.filter(({ isPinned }) => isPinned);
+    const otherNotes = homeNotes?.length > 0 && homeNotes.filter(({ isPinned }) => !isPinned);
+
+    console.log(notes);
+    console.log(archive);
+    
     return (
         <>
             <Navbar />
@@ -42,8 +47,8 @@ export const Home = () => {
                                     <h1 className="pb-1">Pinned Notes</h1>
                                     <div className="flex flex-wrap gap-4">
                                         {
-                                            pinnedNotes?.length > 0 && pinnedNotes.map(({ title, text, id, isPinned }) => (
-                                                <NotesCard key={id} id={id} title={title} text={text} isPinned={isPinned} />
+                                            pinnedNotes?.length > 0 && pinnedNotes.map(({ title, text, id, isPinned, isArchived}) => (
+                                                <NotesCard key={id} id={id} title={title} text={text} isPinned={isPinned} isArchived={isArchived}/>
                                             )
                                             )
 
@@ -59,8 +64,8 @@ export const Home = () => {
                             }
                             <div className="flex flex-wrap gap-4">
                                 {
-                                    otherNotes?.length > 0 && otherNotes.map(({ title, text, id, isPinned }) => (
-                                        <NotesCard key={id} id={id} title={title} text={text} isPinned={isPinned} />
+                                    otherNotes?.length > 0 && otherNotes.map(({ title, text, id, isPinned, isArchived}) => (
+                                        <NotesCard key={id} id={id} title={title} text={text} isPinned={isPinned} isArchived={isArchived} />
                                     )
                                     )
 
